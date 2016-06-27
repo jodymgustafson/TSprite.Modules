@@ -226,16 +226,25 @@ export class CanvasSprite extends Sprite
     constructor(drawable?: any, w?: number, h?: number)
     {
         super(w, h);
-        if (drawable && typeof drawable === "function")
+        if (drawable)
         {
-            // Create a drawable object using the drawable function
-            this._drawable = {
-                draw: drawable,
-                getWidth: () => w,
-                getHeight: () => h
-            };
+            if (typeof drawable === "function")
+            {
+                // Create a drawable object using the drawable function
+                this._drawable = {
+                    draw: drawable,
+                    getWidth: () => w,
+                    getHeight: () => h
+                };
+            }
+            else if (!(w || h)) // must be <IDrawable>
+            {
+                // Set from drawable object
+                this.w = (<IDrawable>drawable).getWidth();
+                this.h = (<IDrawable>drawable).getHeight();
+            }
         }
-        else this._drawable = drawable;
+        this._drawable = drawable;
     }
 
     /**

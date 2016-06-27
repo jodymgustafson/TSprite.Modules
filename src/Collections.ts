@@ -298,7 +298,7 @@ export class ZOrderedSpriteList<T extends Sprite> extends OrderedSpriteList<T>
 {
     constructor()
     {
-        super((s1, s2) => s1.zIndex - s2.zIndex);
+        super((s1, s2) => s2.zIndex - s1.zIndex);
     }
 }
  

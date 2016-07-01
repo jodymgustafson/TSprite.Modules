@@ -221,30 +221,48 @@ export class CanvasSprite extends Sprite
     /** Creates a sprite using a IDrawable object */
     constructor(drawable: IDrawable, w?: number, h?: number);
     /** Creates a sprite using a draw function */
-    constructor(drawFn: DrawableFunction, w?: number, h?: number);
+    constructor(drawFn: DrawableFunction, w: number, h: number);
     /** The constructor */
-    constructor(drawable?: any, w?: number, h?: number)
+    constructor(drawableOrW?: any, wOrH?: number, h?: number)
     {
-        super(w, h);
-        if (drawable)
+        super();
+
+        if (drawableOrW)
         {
-            if (typeof drawable === "function")
+            if (typeof drawableOrW === "function")
             {
                 // Create a drawable object using the drawable function
                 this._drawable = {
-                    draw: drawable,
-                    getWidth: () => w,
+                    draw: drawableOrW,
+                    getWidth: () => wOrH,
                     getHeight: () => h
                 };
+                this.w = wOrH;
+                this.h = h;
             }
-            else if (!(w || h)) // must be <IDrawable>
+            else
             {
-                // Set from drawable object
-                this.w = (<IDrawable>drawable).getWidth();
-                this.h = (<IDrawable>drawable).getHeight();
+                // Must be IDrawable
+                this._drawable = drawableOrW;
+                if (wOrH || h)
+                {
+                    this.w = wOrH;
+                    this.h = h;
+                }
+                else
+                {
+                    // Set from drawable object
+                    this.w = this._drawable.getWidth();
+                    this.h = this._drawable.getHeight();
+                }
             }
         }
-        this._drawable = drawable;
+        else
+        {
+            // Only passed in width and height (maybe)
+            this.w = drawableOrW;
+            this.h = wOrH;
+        }
     }
 
     /**

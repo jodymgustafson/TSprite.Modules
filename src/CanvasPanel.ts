@@ -1,4 +1,4 @@
-﻿import {debug, IPoint, IVelocity} from "./Base";
+﻿import {debugEnabled, IPoint, IVelocity} from "./Base";
 import {Panel} from "./Panel";
 import {IDrawable, SpriteSheetImage} from "./Canvas";
 
@@ -52,6 +52,13 @@ export class CanvasPanel extends Panel implements IDrawable
         }
         this.imageW = this._drawable ? this._drawable.getWidth() : w;
         this.imageH = this._drawable ? this._drawable.getHeight() : h;
+    }
+
+    // @override
+    public moveTo(x: number, y: number): CanvasPanel
+    {
+        super.moveTo(x, y);
+        return this;
     }
 
     public getWidth(): number
@@ -135,7 +142,7 @@ export class CanvasPanel extends Panel implements IDrawable
                 }
             }
             context.restore();
-            if (debug) context.strokeRect(x, y, w, h);
+            if (debugEnabled()) context.strokeRect(x, y, w, h);
             return this;
         }
     }

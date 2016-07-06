@@ -1,4 +1,4 @@
-import {Sprite, debug} from "./Base";
+import {Sprite, debugEnabled, ICollisionChecker, Rectangle} from "./Base";
 
 /**
 * Sprite objects that are drawn on a canvas
@@ -210,6 +210,11 @@ export class SpriteSheet
     }
 }
 
+export interface ICanvasCollisionChecker extends ICollisionChecker
+{
+    draw(context: CanvasRenderingContext2D): void;
+}
+
 ///////////////////////////////////////////////////////////////////////
 /** Implements a sprite that is drawn to a canvas using a drawable object */
 export class CanvasSprite extends Sprite
@@ -277,7 +282,7 @@ export class CanvasSprite extends Sprite
             {
                 this._drawable.draw(context, this.x, this.y, this.w, this.h);
             }
-            if (debug)
+            if (debugEnabled())
             {
                 this.drawCollisionAreas(context);
             }
@@ -310,19 +315,12 @@ export class CanvasSprite extends Sprite
     public drawCollisionAreas(context: CanvasRenderingContext2D): void
     {
         context.save();
+        // Draw rect bounds
         context.strokeStyle = "green";
         context.strokeRect(this.x, this.y, this.w, this.h);
-        if (this._colAreas)
+        if (this.collisionChecker && this.collisionChecker["draw"])
         {
-            context.strokeStyle = "red";
-            for (var i in this._colAreas)
-            {
-                context.strokeRect(
-                    this.x + this._colAreas[i].x,
-                    this.y + this._colAreas[i].y,
-                    this._colAreas[i].w,
-                    this._colAreas[i].h);
-            }
+            this.collisionChecker["draw"](context);
         }
         context.restore();
     }

@@ -3,7 +3,20 @@
 // @version 1.00
 
 /** Used to get or set debug mode */
-export var debug = false;
+window["TSprite"] = window["TSprite"] || {
+    debug: false
+};
+
+export function debugEnabled(enable: boolean): void;
+export function debugEnabled(): boolean;
+export function debugEnabled(enable?: boolean): any
+{
+    if (enable === void (0))
+    {
+        return window["TSprite"].debug;
+    }
+    window["TSprite"].debug = enable;
+}
 
 export interface IPoint
 {
@@ -134,9 +147,22 @@ export class Rectangle
     }
 }
 
+/** Defines the interface for collision checking algorithms */
+export interface ICollisionChecker
+{
+    intersects(otherSprite: Sprite): boolean;
+}
+
+
+/** Default collision checker for sprites */
+var noOpCollisionChecker: ICollisionChecker = {
+    intersects: (otherSprite: Sprite): boolean => true,
+};
+
 // Used to keep track of next UID internally for sprites
 var nextUID = 0;
-// Resets the UID to the base number specified
+
+/** Resets the sprite UID to the base number specified */
 export function resetUID(base: number): void
 {
     nextUID = base;
@@ -157,9 +183,8 @@ export class Sprite extends Rectangle
     public zIndex: number;
     /** Used to associate any user data with the sprite */
     public userData: any;
-    /** Collision areas
-        * @protected */
-    _colAreas: Rectangle[] = null;
+    /** Collision checking strategy to use */
+    public collisionChecker: ICollisionChecker;
 
     private _uid: number;
     /** Gets the unique ID of this sprite */
@@ -244,78 +269,23 @@ export class Sprite extends Rectangle
         return this;
     }
 
-    /** Adds a collision area to be used to check for collisions */
-    public addCollisionArea(x: number, y: number, w: number, h: number): Sprite
-    {
-        var rect = new Rectangle(w, h).moveTo(x, y);
-        if (!this._colAreas)
-        {
-            this._colAreas = [rect];
-        }
-        else
-        {
-            this._colAreas.push(rect);
-        }
-        return this;
-    }
-
     /** Determines if this sprite intersects another */
     public intersects(otherSprite: Sprite): boolean
     {
         // First see if the rect bounds intersect
         if (super.intersects(otherSprite))
         {
-            // If there are collisions areas check those
-            if (this._colAreas) return this._checkCollisionAreas(otherSprite);
-            else if (otherSprite._colAreas) return otherSprite._checkCollisionAreas(this);
-            else return true;
-        }
-        return false;
-    }
-
-    /**
-        * Checks collisions areas of two sprites
-        * @protected
-        * @param otherSprite The other sprite
-        * @param noRecurse Used internally when this method is called for the other sprite
-        */
-    _checkCollisionAreas(otherSprite: Sprite, noRecurse = false): boolean
-    {
-        for (let i = 0; i < this._colAreas.length; i++)
-        {
-            var thisArea = this._getCollisionArea(i);
-
-            if (otherSprite._colAreas)
+            // then any other collision checking
+            if (this.collisionChecker)
             {
-                // Check against other sprite's collision areas
-                for (let j = 0; j < otherSprite._colAreas.length; j++)
+                if (debugEnabled())
                 {
-                    if (thisArea.intersects(otherSprite._getCollisionArea(j))) return true;
+                    console.log("Sprite rect bounds intersect, asking collision checker");
                 }
+                return this.collisionChecker.intersects(otherSprite);
             }
-            else
-            {
-                // Check against other sprite's bounds
-                if (thisArea.intersects(otherSprite)) return true;
-            }
+            return true;
         }
-
         return false;
-    }
-
-    /**
-    * Get a collision area with offsets applied
-    * @protected
-    * @param idx Index of the collision area
-    */
-    _getCollisionArea(idx: number): Rectangle
-    {
-        var collArea = this._colAreas[idx];
-        var rect = new Rectangle();
-        rect.x = this.x + collArea.x;
-        rect.y = this.y + collArea.y;
-        rect.w = collArea.w;
-        rect.h = collArea.h;
-        return rect;
     }
 }

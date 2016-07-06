@@ -22,16 +22,33 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="examples\example1.1\example1.1.ts" />
+    <TypeScriptCompile Include="examples\example1\example1.ts" />
+    <TypeScriptCompile Include="examples\example2\example2.ts" />
+    <TypeScriptCompile Include="examples\example3\example3.ts" />
+    <TypeScriptCompile Include="examples\example8\example8.ts" />
+    <TypeScriptCompile Include="examples\example7\example7.ts" />
+    <TypeScriptCompile Include="examples\example4\example4.ts" />
+    <TypeScriptCompile Include="examples\example5\example5.ts" />
+    <TypeScriptCompile Include="examples\example6\example6.ts" />
+    <TypeScriptCompile Include="examples\ExampleApp.ts" />
     <TypeScriptCompile Include="Scripts\typings\jasmine\jasmine.d.ts" />
+    <TypeScriptCompile Include="Scripts\typings\SAT.d.ts" />
     <TypeScriptCompile Include="src\AnimationLoop.ts" />
     <TypeScriptCompile Include="src\Base.ts" />
     <TypeScriptCompile Include="src\Canvas.ts" />
+    <TypeScriptCompile Include="src\CanvasMultiRectCollisionChecker.ts" />
     <TypeScriptCompile Include="src\CanvasPanel.ts" />
+    <TypeScriptCompile Include="src\CanvasSATCollisionChecker.ts" />
     <TypeScriptCompile Include="src\Collections.ts" />
+    <TypeScriptCompile Include="src\MultiRectCollisionChecker.ts" />
+    <TypeScriptCompile Include="src\SATCollisionChecker.ts" />
     <TypeScriptCompile Include="src\Panel.ts" />
     <TypeScriptCompile Include="unitTests\specs\Canvas.spec.ts" />
     <TypeScriptCompile Include="unitTests\specs\Collections.spec.ts" />
+    <TypeScriptCompile Include="unitTests\specs\MultiRectCollisionChecker.spec.ts" />
     <TypeScriptCompile Include="unitTests\specs\Panel.spec.ts" />
+    <TypeScriptCompile Include="unitTests\specs\SATCollisionChecker.spec.ts" />
     <TypeScriptCompile Include="unitTests\specs\Sprite.spec.ts" />
     <TypeScriptCompile Include="unitTests\unit-tests.ts" />
   </ItemGroup>
@@ -39,11 +56,31 @@
   <ItemGroup>
     <Content Include="Content\jasmine\jasmine.css" />
     <Content Include="Content\jasmine\jasmine_favicon.png" />
+    <Content Include="examples\example1.1\app.html" />
+    <Content Include="examples\example1\app.html" />
+    <Content Include="examples\example2\app.html" />
+    <Content Include="examples\example2\images\ball.png" />
+    <Content Include="examples\example3\app.html" />
+    <Content Include="examples\example3\images\ball.png" />
+    <Content Include="examples\example8\app.html" />
+    <Content Include="examples\example8\images\sprites.png" />
+    <Content Include="examples\example7\app.html" />
+    <Content Include="examples\example7\images\sprites.png" />
+    <Content Include="examples\example4\app.html" />
+    <Content Include="examples\example4\images\sprites.png" />
+    <Content Include="examples\example5\app.html" />
+    <Content Include="examples\example5\images\sprites.png" />
+    <Content Include="examples\example6\app.html" />
+    <Content Include="examples\example6\images\sprites.png" />
+    <Content Include="examples\examples.css" />
+    <Content Include="examples\index.html" />
     <Content Include="Scripts\jasmine\boot.js" />
     <Content Include="Scripts\jasmine\console.js" />
     <Content Include="Scripts\jasmine\jasmine-html.js" />
     <Content Include="Scripts\jasmine\jasmine.js" />
     <Content Include="Scripts\require1k.js" />
+    <Content Include="Scripts\SAT\SAT.js" />
+    <Content Include="Scripts\SAT\SAT.min.js" />
     <Content Include="unitTests\unit-tests.html" />
   </ItemGroup>
   <ItemGroup>

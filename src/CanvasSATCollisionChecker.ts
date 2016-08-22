@@ -20,18 +20,31 @@ export class CanvasSATCollisionChecker extends SATCollisionChecker implements IC
         context.strokeStyle = "red";
         context.lineWidth = 1;
 
+        let x = this.sprite.x;
+        let y = this.sprite.y;
+
         if (this.shape instanceof SAT.Circle)
         {
+            if (this.offset)
+            {
+                x += this.offset.x / 2;
+                y += this.offset.y / 2;
+            }
             context.beginPath();
-            context.arc(this.sprite.x + this.sprite.w / 2, this.sprite.y + this.sprite.h / 2, (<SAT.Circle>this.shape).r, 0, 2 * Math.PI);
+            context.arc(x + this.sprite.w / 2, y + this.sprite.h / 2, (<SAT.Circle>this.shape).r, 0, 2 * Math.PI);
             context.stroke();
         }
         else
         {
+            if (this.offset)
+            {
+                x += this.offset.x;
+                y += this.offset.y;
+            }
             context.beginPath();
             (<SAT.Polygon>this.shape).points.forEach(point =>
             {
-                context.lineTo(this.sprite.x + point.x,this.sprite.y + point.y);
+                context.lineTo(x + point.x, y + point.y);
             });
             context.closePath();
             context.stroke();

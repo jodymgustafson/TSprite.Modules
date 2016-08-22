@@ -107,5 +107,24 @@ describe("Collections", () =>
             it("should have the correct count", () => expect(list.count).toBe(0));
             it("should have string value", () => expect(list.toString()).toBe(""));
         });
+
+        describe("when add multiple sprites", () =>
+        {
+            beforeAll(() => list.addSprites(new Sprite(), new Sprite(), new Sprite(), new Sprite()));
+            it("should NOT be empty", () => expect(list.isEmpty()).toBeFalsy());
+            it("should have correct count", () => expect(list.count).toBe(4));
+        });
+
+        describe("when purge inactive sprites", () =>
+        {
+            beforeAll(() =>
+            {
+                list.itemAt(0).disable();
+                list.itemAt(3).disable();
+                list.purgeInactive();
+            });
+            it("should have correct count", () => expect(list.count).toBe(2));
+        });
+
     });
 });

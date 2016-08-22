@@ -96,7 +96,7 @@ export class DoublyLinkedList<T>
     }
 
     /** Adds the item to the end of the list */
-    public add(data: T)
+    public add(data: T): void
     {
         var node = new DoublyLinkedListNode(data, this._last);
         if (this._count > 0)
@@ -113,7 +113,7 @@ export class DoublyLinkedList<T>
     }
 
     /** Inserts the item at the index */
-    public insert(data: T, index: number)
+    public insert(data: T, index: number): void
     {
         var newNode = new DoublyLinkedListNode(data);
         if (this._count === 0)
@@ -140,7 +140,7 @@ export class DoublyLinkedList<T>
     }
 
     /** Removes the item at the index */
-    public removeAt(index: number)
+    public removeAt(index: number): void
     {
         if (index >= 0 && index < this._count)
         {
@@ -157,8 +157,7 @@ export class DoublyLinkedList<T>
         }
     }
 
-    /** @protected */
-    _removeNode(node: DoublyLinkedListNode<T>)
+    protected _removeNode(node: DoublyLinkedListNode<T>): void
     {
         if (node.prev)
         {
@@ -186,7 +185,7 @@ export class DoublyLinkedList<T>
     }
 
     /** Truncates the list at the specified index */
-    public truncate(index: number)
+    public truncate(index: number): void
     {
         if (index >= 0 && index < this._count)
         {
@@ -206,7 +205,7 @@ export class DoublyLinkedList<T>
     }
 
     /** Removes all items from the list */
-    public clear()
+    public clear(): void
     {
         this._first = this._last = null;
         this._count = 0;
@@ -215,7 +214,7 @@ export class DoublyLinkedList<T>
     /** Enumerates over all items.
     * @param fn The function to call for each item. If it returns a truthy value the enumeration is stopped. 
     */
-    public forEach(fn: (item: T) => any)
+    public forEach(fn: (item: T) => any): void
     {
         for (var item = this._first; item; item = item.next)
         {
@@ -234,7 +233,10 @@ export class OrderedSpriteList<T extends Sprite> extends DoublyLinkedList<T>
         super();
     }
 
-    public add(sprite: T)
+    /**
+     *  @override
+     */
+    public add(sprite: T): void
     {
         if (!this._first)
         {
@@ -257,18 +259,37 @@ export class OrderedSpriteList<T extends Sprite> extends DoublyLinkedList<T>
         }
     }
 
+    /**
+     * Adds one or more sprites
+     * @param sprites
+     */
+    public addSprites(...sprites: T[]): void
+    {
+        sprites.forEach(s => this.add(s));
+    }
+
+    /**
+     * Safely removes all sprites that are not active
+     */
     public purgeInactive()
     {
-        for (var node = this._first; node; node = node.next)
+        let node = this._first;
+        while (node)
         {
+            let next = node.next;
             if (!node.data.active)
             {
                 super._removeNode(node);
             }
+            node = next;
         }
     }
 
-    public removeSprite(sprite: Sprite)
+    /**
+     * Removes a sprite from the collection
+     * @param sprite
+     */
+    public removeSprite(sprite: Sprite): void
     {
         for (var node = this._first; node; node = node.next)
         {
@@ -280,9 +301,8 @@ export class OrderedSpriteList<T extends Sprite> extends DoublyLinkedList<T>
         }
     }
 
-    public toString(max?: number)
+    public toString(max = 100): string
     {
-        max = max || 100;
         var cnt = 0, sb = [];
         this.forEach((sprite) =>
         {

@@ -23,12 +23,12 @@ export class RotatingSprite extends Canvas.CanvasSprite
             (context: CanvasRenderingContext2D, xi: number, yi: number, wi: number, hi: number) =>
             {
                 context.save();
-                // Move to where we want to draw the image
-                context.translate(xi, yi);
-                context.rotate(this.radians);
-                // Draw image at its center
+                // Get center of image
                 var cx = (wi / 2);
                 var cy = (hi / 2);
+                // Move to where we want to draw the image
+                context.translate(xi + cx, yi + cy);
+                context.rotate(this.radians);
                 image.draw(context, -cx, -cy, wi, hi);
                 context.restore();
             },

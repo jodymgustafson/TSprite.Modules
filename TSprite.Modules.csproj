@@ -32,6 +32,7 @@
     <TypeScriptCompile Include="examples\example5\example5.ts" />
     <TypeScriptCompile Include="examples\example6\example6.ts" />
     <TypeScriptCompile Include="examples\ExampleApp.ts" />
+    <TypeScriptCompile Include="Scripts\typings\index.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jasmine\jasmine.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\SAT.d.ts" />
     <TypeScriptCompile Include="src\AnimationLoop.ts" />

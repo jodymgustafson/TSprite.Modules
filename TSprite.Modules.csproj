@@ -43,8 +43,10 @@
     <TypeScriptCompile Include="src\CanvasSATCollisionChecker.ts" />
     <TypeScriptCompile Include="src\Collections.ts" />
     <TypeScriptCompile Include="src\MultiRectCollisionChecker.ts" />
+    <TypeScriptCompile Include="src\RotatingSprite.ts" />
     <TypeScriptCompile Include="src\SATCollisionChecker.ts" />
     <TypeScriptCompile Include="src\Panel.ts" />
+    <TypeScriptCompile Include="src\TexturePackerSpriteSheet.ts" />
     <TypeScriptCompile Include="unitTests\specs\Canvas.spec.ts" />
     <TypeScriptCompile Include="unitTests\specs\Collections.spec.ts" />
     <TypeScriptCompile Include="unitTests\specs\MultiRectCollisionChecker.spec.ts" />

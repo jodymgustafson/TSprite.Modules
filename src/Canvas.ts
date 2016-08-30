@@ -56,7 +56,8 @@ export class SpriteSheetImage implements IDrawable
             // Set offset and size within sprite sheet
             this.x, this.y, this.w, this.h,
             // Set position to draw image at and size to draw it
-            x, y, w || this.w, h || this.h);
+            x, y,
+            w || this.w, h || this.h);
         return this;
     }
 
@@ -152,7 +153,9 @@ export class ImageAnimationFrames implements IAnimationFrames
         var frame = this.currentFrame;
         context.drawImage(this.image,
             frame.x, frame.y, frame.w, frame.h,
-            x, y, w || frame.w, h || frame.h);
+            // Set position to draw image at and size to draw it
+            x, y,
+            w || frame.w, h || frame.h);
         return this;
     }
 
@@ -339,7 +342,7 @@ export class ImageSprite extends CanvasSprite
     */
     constructor(image: HTMLImageElement, w?: number, h?: number)
     {
-        super(
+        super(// Define an IDrawable that draws the image
             (context: CanvasRenderingContext2D, xi: number, yi: number, wi: number, hi: number) =>
                 {
                     context.drawImage(image, xi, yi, wi, hi);

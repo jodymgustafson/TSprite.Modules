@@ -1,4 +1,4 @@
-﻿import {Sprite} from "./Base";
+﻿import {Sprite, debugEnabled} from "./Base";
 
 /** A simple sprite list */
 export class SpriteList<T extends Sprite>
@@ -279,6 +279,7 @@ export class OrderedSpriteList<T extends Sprite> extends DoublyLinkedList<T>
             let next = node.next;
             if (!node.data.active)
             {
+                if (debugEnabled()) console.log("Removing sprite: " + node.data.id);
                 super._removeNode(node);
             }
             node = next;

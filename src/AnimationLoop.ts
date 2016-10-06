@@ -22,6 +22,8 @@ export class AnimationLoop
     private _frameCnt = 0;
     private _callback: (dt: number) => any;
     private _maxDelta: number;
+    /** The min delta allowed before the callback is fired */
+    public minDelta: number;
 
     /**
     * @param callback The function to call for each frame of the animation loop
@@ -77,6 +79,12 @@ export class AnimationLoop
         if (this._lastUpdate > 0 && this._isRunning)
         {
             var dt = now - this._lastUpdate;
+            if (this.minDelta && dt < this.minDelta)
+            {
+                this.requestNextFrame();
+                return;
+            }
+
             if (dt < this._maxDelta)
             {
                 this._ttlTime += dt;
@@ -85,8 +93,14 @@ export class AnimationLoop
             }
             else console.log("Animation frame dropped, dt=" + dt);
         }
+
         this._lastUpdate = now;
 
+        this.requestNextFrame();
+    }
+
+    private requestNextFrame(): void
+    {
         // Request next frame if not stopped
         if (this._isRunning)
         {

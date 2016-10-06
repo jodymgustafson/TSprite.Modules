@@ -57,6 +57,8 @@ export class SATCollisionChecker implements ICollisionChecker
 
     public intersects(otherSprite: Sprite): boolean
     {
+        if (!otherSprite.collisionChecker) return null;
+
         let otherShape = (<SATCollisionChecker>otherSprite.collisionChecker).shape;
         let otherOffset = (<SATCollisionChecker>otherSprite.collisionChecker).offset;
 
